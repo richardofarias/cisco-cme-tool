@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inventário Cisco CME</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header>
+      <div>
+        <h1>Inventário de Ramais Cisco CME</h1>
+        <p>Carregue o arquivo de backup / configuração e veja o inventário de `voice register` e `ephone-dn`.</p>
+      </div>
+      <div class="action-row">
+        <label class="file-upload">
+          <span>Selecionar backup</span>
+          <input id="inputFile" type="file" accept=".cfg,.txt" />
+        </label>
+      </div>
+    </header>
+
+    <section class="status-panel">
+      <div>
+        <strong>Arquivo:</strong>
+        <span id="fileName">nenhum arquivo selecionado</span>
+      </div>
+      <div>
+        <strong>Total de linhas:</strong>
+        <span id="lineCount">0</span>
+      </div>
+      <div>
+        <strong>Ramais detectados:</strong>
+        <span id="itemCount">0</span>
+      </div>
+      <div>
+        <strong>Voice register:</strong>
+        <span id="voiceRegisterCount">0 de 0</span>
+      </div>
+      <div>
+        <strong>Ephone-dn:</strong>
+        <span id="ephoneDnCount">0 de 0</span>
+      </div>
+      <div>
+        <strong>Fontes:</strong>
+        <span id="sources">-</span>
+      </div>
+    </section>
+
+    <section class="toolbar">
+      <div class="toolbar-group">
+        <input id="searchInput" type="search" placeholder="Pesquisar ramal ou nome" />
+        <select id="sortSelect" aria-label="Ordenar inventário">
+          <option value="id">Ordenar por ID</option>
+          <option value="number">Ordenar por Ramal</option>
+          <option value="name">Ordenar por Nome</option>
+        </select>
+      </div>
+      <div class="toolbar-group actions-group">
+        <button id="downloadCsv" class="primary" disabled>Exportar CSV</button>
+        <button id="downloadJson" disabled>Exportar JSON</button>
+        <button id="copyJson" disabled>Copiar JSON</button>
+      </div>
+    </section>
+
+    <section class="ddr-panel">
+      <div class="panel-header">
+        <div>
+          <h2>DDR Filtro</h2>
+          <p>Defina faixas DDR para identificar os ramais que pertencem ao range.</p>
+        </div>
+      </div>
+      <div class="ddr-panel-body">
+        <div class="toolbar-group">
+          <input id="ddrStart" type="number" placeholder="DDR início" />
+          <input id="ddrEnd" type="number" placeholder="DDR fim" />
+          <button id="addDdrRange" class="secondary" type="button">Adicionar faixa DDR</button>
+        </div>
+        <div class="toolbar-group ddr-ranges-wrapper">
+          <span class="ddr-ranges-title">Faixas DDR:</span>
+          <div id="ddrRangesList" class="ddr-ranges-list">Nenhuma faixa adicionada</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="result-panel">
+      <div class="table-wrapper">
+        <table id="inventoryTable">
+          <thead>
+            <tr>
+              <th>Número Ramal</th>
+          <th>Fonte</th>
+          <th>DDR</th>
+          <th>Modelo</th>
+          <th>MAC</th>
+          <th>Pool</th>
+          <th>Status</th>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Label</th>
+          <th>Tipo</th>
+          <th>Descrição</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="json-wrapper">
+        <h2>JSON</h2>
+        <pre id="jsonOutput">{}</pre>
+      </div>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
